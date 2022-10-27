@@ -6,7 +6,6 @@
 package com.mycompany.controller;
 
 /**
- *
  * @author erick
  */
 public class Controller {
