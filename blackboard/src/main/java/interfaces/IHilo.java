@@ -1,6 +1,7 @@
 
 package interfaces;
 
-public interface IHilo {
-    
+public interface IHilo extends Runnable {
+    @Override
+    public void run();
 }
