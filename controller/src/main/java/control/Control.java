@@ -11,7 +11,8 @@ public class Control {
     
     
     public void update(BlackBoardObject bbo){
-        
+        ManejadorKS manejador = new ManejadorKS();
+        manejador.ejecutar(bbo);
     }
     
 }
