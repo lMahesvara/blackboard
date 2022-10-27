@@ -1,16 +1,19 @@
 package blackboard;
 
+import control.Control;
 import entidades.BlackBoardObject;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public class Blackboard {
-    //private Controller control;
+    private Control control;
     private static Blackboard instance;
     private List<BlackBoardObject> peticiones;
     
     private Blackboard() {
         peticiones = new LinkedList<>();
+        control = new Control();
     }
     
     public static Blackboard getInstance(){
@@ -21,11 +24,12 @@ public class Blackboard {
     
     public void addProblem(BlackBoardObject bbo){
         peticiones.add(bbo);
-        notifyController();
+        notifyController(bbo);
+        peticiones.remove(bbo);
     }
     
-    private void notifyController(){
-        //control.update();
+    private void notifyController(BlackBoardObject bbo){
+        control.update(bbo);
     }
     
 }
