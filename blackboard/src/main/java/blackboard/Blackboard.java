@@ -2,7 +2,6 @@ package blackboard;
 
 import control.Control;
 import entidades.BlackBoardObject;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,8 +11,8 @@ public class Blackboard {
     private List<BlackBoardObject> peticiones;
     
     private Blackboard() {
-        peticiones = new LinkedList<>();
-        control = new Control();
+        this.peticiones = new LinkedList<>();
+        this.control = new Control();
     }
     
     public static Blackboard getInstance(){
