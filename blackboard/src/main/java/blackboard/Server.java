@@ -51,10 +51,10 @@ public class Server implements IServer {
     public void sendResponse() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+ 
     @Override
     public void ejecutarNuevoHilo(String json) {
-        //HiloSocket hilo = HilosFactory.crearHilo(json);
-        //hilo.start();
+        HiloSocket hilo = HilosFactory.crearHiloSocket(json);
+        hilo.start();
     }
 }
