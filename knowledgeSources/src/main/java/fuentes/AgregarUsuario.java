@@ -1,4 +1,3 @@
-
 package fuentes;
 
 import entidades.BlackBoardObject;
@@ -8,59 +7,66 @@ import interfaces.IConexionBD;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 
-public class AgregarUsuario extends AbstractFuente{
+public class AgregarUsuario extends AbstractFuente {
 
     private final IConexionBD conexionBD;
     private final EntityManager em;
-    
-    public AgregarUsuario(IConexionBD conexionBD){
+
+    public AgregarUsuario(IConexionBD conexionBD) {
         this.conexionBD = conexionBD;
         this.em = this.conexionBD.crearConexion();
-    } 
-    
+    }
+
     @Override
-    public void procesar(BlackBoardObject bbo){
-        
-        try{      
-            Usuario usuario = bbo.getUsuario(); 
-            if(existeUsuario(usuario.getUsuario())) return;
+    public void procesar(BlackBoardObject bbo) {
+
+        try {
+            Usuario usuario = bbo.getUsuario();
+            if (existeUsuario(usuario.getUsuario())) {
+                return;
+            }
             em.getTransaction().begin();
             em.persist(usuario);
             em.getTransaction().commit();
             em.close();
-        
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             Logger.getLogger(AgregarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     @Override
-    public void agregarProblema(){
-        
+    public void agregarProblema() {
+
     }
-    
-    public boolean existeUsuario(String usuario){
-        
+
+    public boolean existeUsuario(String usuario) {
+
         em.getTransaction().begin();
-        
+
         Query query = em.createQuery(
-                "SELECT e "
+                "SELECT u "
                 + "FROM Usuario u "
                 + "WHERE u.usuario = :usuario");
-        
+
         query.setParameter("usuario", usuario);
-        
+
         List<Usuario> usuarios = query.getResultList();
-        
+
         em.getTransaction().commit();
+
+        if (usuarios.isEmpty()) {
+            return false;
+        }
         em.close();
-        
-        if(usuarios.isEmpty()) return false;
+        System.out.println("-------------------------");
+        System.out.println("El usuario ya existe");
+        System.out.println("-------------------------");
         return true;
     }
-        
+
 }

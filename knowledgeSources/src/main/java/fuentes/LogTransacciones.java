@@ -5,7 +5,7 @@ package fuentes;
 import entidades.BlackBoardObject;
 import interfaces.AbstractFuente;
 import interfaces.IConexionBD;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 public class LogTransacciones extends AbstractFuente{
     

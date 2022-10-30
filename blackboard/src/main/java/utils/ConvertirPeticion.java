@@ -7,9 +7,14 @@ import entidades.BlackBoardObject;
 public class ConvertirPeticion {
     
     public static BlackBoardObject BBOConverter(String json){
+        System.out.println("--------------------------------------");
+        System.out.println(json);
+        System.out.println("--------------------------------------");
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(json, BlackBoardObject.class);
+            BlackBoardObject bbo = objectMapper.readValue(json, BlackBoardObject.class);
+            System.out.println(bbo);
+            return bbo;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

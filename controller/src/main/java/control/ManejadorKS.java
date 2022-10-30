@@ -3,7 +3,6 @@ package control;
 
 import entidades.BlackBoardObject;
 import fabricas.FuentesFactory;
-import fuentes.AgregarUsuario;
 import static helpers.Peticiones.*;
 import interfaces.AbstractFuente;
 import interfaces.IFuentesFactory;
