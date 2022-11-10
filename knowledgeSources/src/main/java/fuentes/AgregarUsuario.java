@@ -9,6 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import peticiones.AbstractPeticion;
+import peticiones.PeticionUsuario;
 
 public class AgregarUsuario extends AbstractFuente {
 
@@ -21,10 +23,10 @@ public class AgregarUsuario extends AbstractFuente {
     }
 
     @Override
-    public void procesar(BlackBoardObject bbo) {
-
+    public void procesar(AbstractPeticion peticion) {
+        PeticionUsuario pU = (PeticionUsuario)peticion;
         try {
-            Usuario usuario = bbo.getUsuario();
+            Usuario usuario = pU.getUsuario();
             if (existeUsuario(usuario.getUsuario())) {
                 return;
             }

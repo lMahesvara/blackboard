@@ -1,13 +1,13 @@
 
 package blackboard;
 
-import entidades.BlackBoardObject;
-import utils.ConvertirPeticion;
+import helpers.ConvertirPeticion;
+import peticiones.AbstractPeticion;
 
 public class HilosFactory {
     
     public static HiloSocket crearHiloSocket(String json){
-        BlackBoardObject bbo = ConvertirPeticion.BBOConverter(json);
-        return new HiloSocket(bbo);
+        AbstractPeticion peticion = ConvertirPeticion.PetitionConverter(json);
+        return new HiloSocket(peticion);
     }
 }

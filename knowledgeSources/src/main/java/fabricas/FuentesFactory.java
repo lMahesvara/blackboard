@@ -8,6 +8,8 @@ import fuentes.LogTransacciones;
 import interfaces.AbstractFuente;
 import interfaces.IConexionBD;
 import interfaces.IFuentesFactory;
+import peticiones.AbstractPeticion;
+import static helpers.Peticiones.*;
 
 /**
  *
@@ -17,13 +19,11 @@ public class FuentesFactory implements IFuentesFactory{
     private static final IConexionBD conexionBD = new ConexionBD();
     
     @Override
-    public AbstractFuente crearAgregarUsuario() {
-        return new AgregarUsuario(conexionBD);
-    }
-
-    @Override
-    public AbstractFuente crearLogTransacciones() {
-        return new LogTransacciones(conexionBD);
+    public AbstractFuente crearFuente(AbstractPeticion peticion) {
+        if(peticion.getPeticion().equals(REGISTRAR_USUARIO)){
+            return new AgregarUsuario(conexionBD);
+        }
+        return null;
     }
     
 }

@@ -3,6 +3,7 @@ package control;
 
 import entidades.BlackBoardObject;
 import interfaces.IManejadorKS;
+import peticiones.AbstractPeticion;
 
 public class Control {
 
@@ -12,8 +13,8 @@ public class Control {
         this.manejadorKS = new ManejadorKS();
     }
     
-    public void update(BlackBoardObject bbo){
-        manejadorKS.ejecutar(bbo);
+    public void update(AbstractPeticion peticion){
+        manejadorKS.ejecutar(peticion);
     }
     
 }

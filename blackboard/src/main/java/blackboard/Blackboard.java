@@ -4,11 +4,12 @@ import control.Control;
 import entidades.BlackBoardObject;
 import java.util.LinkedList;
 import java.util.List;
+import peticiones.AbstractPeticion;
 
 public class Blackboard {
     private Control control;
     private static Blackboard instance;
-    private List<BlackBoardObject> peticiones;
+    private List<AbstractPeticion> peticiones;
     
     private Blackboard() {
         this.peticiones = new LinkedList<>();
@@ -21,14 +22,14 @@ public class Blackboard {
         return instance;
     }
     
-    public void addProblem(BlackBoardObject bbo){
-        peticiones.add(bbo);
-        notifyController(bbo);
-        peticiones.remove(bbo);
+    public void addProblem(AbstractPeticion peticion){
+        peticiones.add(peticion);
+        notifyController(peticion);
+        peticiones.remove(peticion);
     }
     
-    private void notifyController(BlackBoardObject bbo){
-        control.update(bbo);
+    private void notifyController(AbstractPeticion peticion){
+        control.update(peticion);
     }
     
 }
