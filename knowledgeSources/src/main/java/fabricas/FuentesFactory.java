@@ -4,7 +4,7 @@ package fabricas;
 
 import conexion.ConexionBD;
 import fuentes.AgregarUsuario;
-import fuentes.LogTransacciones;
+import fuentes.LoguearTransaccion;
 import interfaces.AbstractFuente;
 import interfaces.IConexionBD;
 import interfaces.IFuentesFactory;

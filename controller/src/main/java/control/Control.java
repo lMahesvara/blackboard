@@ -1,20 +1,43 @@
 
 package control;
 
-import entidades.BlackBoardObject;
+import blackboard.Server;
+import interfaces.IFachadaBlackboard;
 import interfaces.IManejadorKS;
 import peticiones.AbstractPeticion;
 
 public class Control {
 
-    IManejadorKS manejadorKS;
-    
+    private IManejadorKS manejadorKS;
+    private static IFachadaBlackboard fachadaBb;
     public Control() {
         this.manejadorKS = new ManejadorKS();
+        this.fachadaBb = new FachadaBlackboard();
     }
-    
+
+    public static void main(String[] args){
+        new Server().start();
+        Control c = new Control();
+        c.preguntarPeticion();
+    }
+
     public void update(AbstractPeticion peticion){
         manejadorKS.ejecutar(peticion);
+    }
+    public void preguntarPeticion(){
+        while(true){
+            try {
+                Thread.sleep(3000);
+                if(fachadaBb.existenPeticiones()){
+                    System.out.println("Entro");
+                    AbstractPeticion peticion = fachadaBb.getPeticion();
+                    fachadaBb.removePeticion();
+                    update(peticion);
+                }else System.out.println("No entro");
+            } catch (InterruptedException e) {
+                System.out.println("GG el hilo");
+            }
+        }
     }
     
 }

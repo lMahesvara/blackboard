@@ -6,5 +6,5 @@ import peticiones.AbstractPeticion;
 
 public abstract class AbstractFuente {
     public void procesar(AbstractPeticion peticion){}
-    public void agregarProblema(){}
+    public void agregarProblema(AbstractPeticion peticion){}
 }

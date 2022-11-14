@@ -20,12 +20,5 @@ public class ManejadorKS implements IManejadorKS{
         AbstractFuente fuente = fuentesFactory.crearFuente(peticion);
         fuente.procesar(peticion);
         
-//        if(peticion.getPeticion().equals(REGISTRAR_USUARIO)){
-//            AbstractFuente fuente = fuentesFactory.crearAgregarUsuario();
-//            fuente.procesar(peticion);
-//        }else if(peticion.getPeticion().equals(LOGGEAR)){
-//            AbstractFuente fuente = fuentesFactory.crearLogTransacciones();
-//            fuente.procesar(peticion);
-//        }
     }
 }

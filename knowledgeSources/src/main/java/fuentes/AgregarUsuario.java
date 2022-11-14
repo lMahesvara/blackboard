@@ -1,7 +1,8 @@
 package fuentes;
 
-import entidades.BlackBoardObject;
+import blackboard.Blackboard;
 import entidades.Usuario;
+import static helpers.Peticiones.LOGGEAR_INFO;
 import interfaces.AbstractFuente;
 import interfaces.IConexionBD;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.logging.Logger;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import peticiones.AbstractPeticion;
+import peticiones.PeticionLog;
 import peticiones.PeticionUsuario;
 
 public class AgregarUsuario extends AbstractFuente {
@@ -34,7 +36,9 @@ public class AgregarUsuario extends AbstractFuente {
             em.persist(usuario);
             em.getTransaction().commit();
             em.close();
-
+            
+            construirPeticion(usuario);
+            
         } catch (Exception ex) {
             Logger.getLogger(AgregarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -42,8 +46,15 @@ public class AgregarUsuario extends AbstractFuente {
     }
 
     @Override
-    public void agregarProblema() {
+    public void agregarProblema(AbstractPeticion peticion) {
+        Blackboard bb = Blackboard.getInstance();
+        bb.addProblem(peticion);
+    }
 
+    public void construirPeticion(Usuario u){
+        String mensaje = "[USUARIO AGREGADO] [username: "+ u.getUsuario() +"]";
+        AbstractPeticion peticion = new PeticionLog(LOGGEAR_INFO, mensaje);
+        this.agregarProblema(peticion);
     }
 
     public boolean existeUsuario(String usuario) {

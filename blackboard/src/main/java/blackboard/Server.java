@@ -8,12 +8,12 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server implements IServer {
-
-    public static void main(String[] args) {
-        IServer server = new Server();
-        server.conexion();
-    }
+public class Server extends Thread implements IServer {
+    
+    @Override
+    public void run() {
+        this.conexion();
+    } 
 
     @Override
     public void conexion() {
