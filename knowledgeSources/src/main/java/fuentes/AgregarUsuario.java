@@ -2,6 +2,7 @@ package fuentes;
 
 import blackboard.Blackboard;
 import entidades.Usuario;
+import helpers.Peticiones;
 import static helpers.Peticiones.LOGGEAR_INFO;
 import static helpers.Peticiones.NOTIFICAR_TODOS;
 import interfaces.AbstractFuente;
@@ -38,8 +39,8 @@ public class AgregarUsuario extends AbstractFuente {
             em.getTransaction().commit();
             em.close();
             
-            construirPeticionLog(usuario);
-            construirPeticionNotificarClientes(usuario);
+            construirPeticionLog(pU);
+            construirPeticionNotificarClientes(pU);
             
         } catch (Exception ex) {
             Logger.getLogger(AgregarUsuario.class.getName()).log(Level.SEVERE, null, ex);
@@ -53,14 +54,14 @@ public class AgregarUsuario extends AbstractFuente {
         bb.addProblem(peticion);
     }
 
-    public void construirPeticionLog(Usuario u){
-        String mensaje = "[USUARIO AGREGADO] [username: "+ u.getUsuario() +"]";
-        AbstractPeticion peticion = new PeticionLog(LOGGEAR_INFO, mensaje);
-        this.agregarProblema(peticion);
+    public void construirPeticionLog(PeticionUsuario peticion){
+        String mensaje = "[USUARIO AGREGADO] [username: "+ peticion.getUsuario() +"]";
+        AbstractPeticion nuevaPeticion = new PeticionLog(LOGGEAR_INFO, peticion.getHashcodeSC(), mensaje);
+        this.agregarProblema(nuevaPeticion);
     }
     
-    public void construirPeticionNotificarClientes(Usuario usuario){
-        agregarProblema(new PeticionUsuario(NOTIFICAR_TODOS, usuario));
+    public void construirPeticionNotificarClientes(PeticionUsuario peticion){
+        agregarProblema(new PeticionUsuario(Peticiones.NOTIFICAR_CLIENTE, peticion.getHashcodeSC(), peticion.getUsuario()));
     }
 
     public boolean existeUsuario(String usuario) {
