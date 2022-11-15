@@ -1,5 +1,6 @@
 package blackboard;
 
+import entidades.Usuario;
 import helpers.ConvertirPeticion;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class SocketCliente extends Thread {
     private Socket socket;
     private BufferedReader entrada;
     private PrintStream salida;
+    
 
     public SocketCliente(Socket socket) {
         this.socket = socket;
@@ -76,6 +78,4 @@ public class SocketCliente extends Thread {
         final SocketCliente other = (SocketCliente) obj;
         return Objects.equals(this.socket, other.socket);
     }
-    
-    
 }

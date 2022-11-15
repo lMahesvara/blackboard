@@ -36,8 +36,10 @@ public class Server extends Thread implements IServer {
 
             while (true) {
                 System.out.println("Esperando conexión");
+
                 socket = server.accept();
                 System.out.println("Conectado con el cliente");
+                
 
                 SocketCliente socketCliente = new SocketCliente(socket);
                 sockets.add(socketCliente);

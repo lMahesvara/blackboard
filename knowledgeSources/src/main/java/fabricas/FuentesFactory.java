@@ -1,5 +1,4 @@
 
-
 package fabricas;
 
 import conexion.ConexionBD;
@@ -25,7 +24,9 @@ public class FuentesFactory implements IFuentesFactory{
         if(peticion.getPeticion().equals(REGISTRAR_USUARIO)){
             return new AgregarUsuario(conexionBD);
         }else if(peticion.getPeticion().equals(LOGGEAR_INFO)){
+            System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeee");
             return new LoguearTransaccion();
+            
         }else if(peticion.getPeticion().equals(NOTIFICAR_TODOS)){
             return new NotificarClientes();
         }else if(peticion.getPeticion().equals(NOTIFICAR_CLIENTE)){
