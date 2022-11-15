@@ -1,8 +1,9 @@
 
 package interfaces;
 
+import peticiones.AbstractPeticion;
+
 
 public interface IFuentesFactory {
-    public AbstractFuente crearAgregarUsuario();
-    public AbstractFuente crearLogTransacciones();
+    public AbstractFuente crearFuente(AbstractPeticion peticion);
 }

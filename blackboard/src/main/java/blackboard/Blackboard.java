@@ -1,34 +1,40 @@
 package blackboard;
 
-import control.Control;
-import entidades.BlackBoardObject;
 import java.util.LinkedList;
 import java.util.List;
+import peticiones.AbstractPeticion;
 
 public class Blackboard {
-    private Control control;
     private static Blackboard instance;
-    private List<BlackBoardObject> peticiones;
-    
+    private List<AbstractPeticion> peticiones;
+
     private Blackboard() {
         this.peticiones = new LinkedList<>();
-        this.control = new Control();
     }
-    
+
     public static Blackboard getInstance(){
         if(instance == null)
             instance = new Blackboard();
         return instance;
     }
-    
-    public void addProblem(BlackBoardObject bbo){
-        peticiones.add(bbo);
-        notifyController(bbo);
-        peticiones.remove(bbo);
+
+    public void addProblem(AbstractPeticion peticion){
+        System.out.println(peticiones);
+        peticiones.add(peticion);
+        System.out.println(peticiones);
     }
-    
-    private void notifyController(BlackBoardObject bbo){
-        control.update(bbo);
+
+    public boolean existenPeticiones(){
+        System.out.println(peticiones);
+        return !peticiones.isEmpty();
+    }
+
+    public AbstractPeticion getPeticion(){
+        return peticiones.get(0);
+    }
+
+    public void removePeticion(){
+        peticiones.remove(0);
     }
     
 }

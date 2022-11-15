@@ -2,12 +2,13 @@
 package blackboard;
 
 import entidades.BlackBoardObject;
+import peticiones.AbstractPeticion;
 
 public class HiloSocket extends Thread{
-    private BlackBoardObject bbo;
+    private AbstractPeticion peticion;
 
-    public HiloSocket(BlackBoardObject bbo) {
-        this.bbo = bbo;
+    public HiloSocket(AbstractPeticion peticion) {
+        this.peticion = peticion;
     }
 
     public HiloSocket() {
@@ -16,7 +17,7 @@ public class HiloSocket extends Thread{
     @Override
     public void run() {
         Blackboard bb = Blackboard.getInstance();
-        bb.addProblem(bbo);
+        bb.addProblem(peticion);
         this.interrupt();
     }
     
