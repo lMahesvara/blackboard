@@ -3,6 +3,7 @@ package fuentes;
 import blackboard.Blackboard;
 import entidades.Usuario;
 import static helpers.Peticiones.LOGGEAR_INFO;
+import static helpers.Peticiones.NOTIFICAR_TODOS;
 import interfaces.AbstractFuente;
 import interfaces.IConexionBD;
 import java.util.List;
@@ -37,7 +38,8 @@ public class AgregarUsuario extends AbstractFuente {
             em.getTransaction().commit();
             em.close();
             
-            construirPeticion(usuario);
+            construirPeticionLog(usuario);
+            construirPeticionNotificarClientes(usuario);
             
         } catch (Exception ex) {
             Logger.getLogger(AgregarUsuario.class.getName()).log(Level.SEVERE, null, ex);
@@ -51,10 +53,14 @@ public class AgregarUsuario extends AbstractFuente {
         bb.addProblem(peticion);
     }
 
-    public void construirPeticion(Usuario u){
+    public void construirPeticionLog(Usuario u){
         String mensaje = "[USUARIO AGREGADO] [username: "+ u.getUsuario() +"]";
         AbstractPeticion peticion = new PeticionLog(LOGGEAR_INFO, mensaje);
         this.agregarProblema(peticion);
+    }
+    
+    public void construirPeticionNotificarClientes(Usuario usuario){
+        agregarProblema(new PeticionUsuario(NOTIFICAR_TODOS, usuario));
     }
 
     public boolean existeUsuario(String usuario) {

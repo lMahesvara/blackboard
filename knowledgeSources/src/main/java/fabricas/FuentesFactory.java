@@ -5,6 +5,7 @@ package fabricas;
 import conexion.ConexionBD;
 import fuentes.AgregarUsuario;
 import fuentes.LoguearTransaccion;
+import fuentes.NotificarClientes;
 import interfaces.AbstractFuente;
 import interfaces.IConexionBD;
 import interfaces.IFuentesFactory;
@@ -22,6 +23,10 @@ public class FuentesFactory implements IFuentesFactory{
     public AbstractFuente crearFuente(AbstractPeticion peticion) {
         if(peticion.getPeticion().equals(REGISTRAR_USUARIO)){
             return new AgregarUsuario(conexionBD);
+        }else if(peticion.getPeticion().equals(LOGGEAR_INFO)){
+            return new LoguearTransaccion();
+        }else if(peticion.getPeticion().equals(NOTIFICAR_TODOS)){
+            return new NotificarClientes();
         }
         return null;
     }
