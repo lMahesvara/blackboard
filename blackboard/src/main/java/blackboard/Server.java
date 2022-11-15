@@ -55,4 +55,12 @@ public class Server extends Thread implements IServer {
             socket.sendResponse(peticion);
         });
     }
+    
+    public void notificarCliente(AbstractPeticion peticion){
+        sockets.forEach(socket -> {
+            if(socket.hashCode() == peticion.getHashcodeSC()){
+                socket.sendResponse(peticion);
+            }
+        });
+    }
 }

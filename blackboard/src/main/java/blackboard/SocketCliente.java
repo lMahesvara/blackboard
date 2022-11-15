@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import peticiones.AbstractPeticion;
@@ -50,7 +51,31 @@ public class SocketCliente extends Thread {
     }
 
     public void ejecutarNuevoHilo(String json) {
-        HiloSocket hilo = HilosFactory.crearHiloSocket(json);
+        HiloSocket hilo = HilosFactory.crearHiloSocket(json, hashCode());
         hilo.start();
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.socket);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SocketCliente other = (SocketCliente) obj;
+        return Objects.equals(this.socket, other.socket);
+    }
+    
+    
 }
