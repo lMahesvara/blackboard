@@ -18,8 +18,8 @@ public class LoguearTransaccion extends AbstractFuente{
 
     @Override
     public void procesar(AbstractPeticion peticion){
-//        PeticionLog pL = (PeticionLog)peticion;
-//        definirTransaccion(pL);
+        PeticionLog pL = (PeticionLog)peticion;
+        definirTransaccion(pL);
     }
     
     @Override

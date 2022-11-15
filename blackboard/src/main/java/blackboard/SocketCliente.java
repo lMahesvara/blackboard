@@ -1,5 +1,6 @@
 package blackboard;
 
+import entidades.Usuario;
 import helpers.ConvertirPeticion;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import peticiones.AbstractPeticion;
@@ -17,6 +19,7 @@ public class SocketCliente extends Thread {
     private Socket socket;
     private BufferedReader entrada;
     private PrintStream salida;
+    
 
     public SocketCliente(Socket socket) {
         this.socket = socket;
@@ -53,4 +56,27 @@ public class SocketCliente extends Thread {
         HiloSocket hilo = HilosFactory.crearHiloSocket(json);
         hilo.start();
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.socket);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SocketCliente other = (SocketCliente) obj;
+        return Objects.equals(this.socket, other.socket);
+    }
+    
 }

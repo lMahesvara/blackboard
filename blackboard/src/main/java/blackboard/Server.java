@@ -36,8 +36,10 @@ public class Server extends Thread implements IServer {
 
             while (true) {
                 System.out.println("Esperando conexión");
+
                 socket = server.accept();
                 System.out.println("Conectado con el cliente");
+                
 
                 SocketCliente socketCliente = new SocketCliente(socket);
                 sockets.add(socketCliente);
@@ -54,5 +56,11 @@ public class Server extends Thread implements IServer {
         sockets.forEach(socket -> {
             socket.sendResponse(peticion);
         });
+    }
+    
+    public void notificarCliente(AbstractPeticion peticion) {
+        //        sockets.forEach(socket -> {
+        //            socket.sendResponse(peticion);
+        //        });
     }
 }

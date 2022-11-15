@@ -1,45 +1,48 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package fuentes;
 
 import blackboard.Blackboard;
 import entidades.Usuario;
 import static helpers.Peticiones.LOGGEAR_INFO;
-import static helpers.Peticiones.NOTIFICAR_TODOS;
+import static helpers.Peticiones.NOTIFICAR_CLIENTE;
 import interfaces.AbstractFuente;
 import interfaces.IConexionBD;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import peticiones.AbstractPeticion;
 import peticiones.PeticionLog;
 import peticiones.PeticionUsuario;
 
-public class AgregarUsuario extends AbstractFuente {
-
+/**
+ *
+ * @author Vastem
+ */
+public class IniciarSesion extends AbstractFuente{
     private final IConexionBD conexionBD;
     private final EntityManager em;
-
-    public AgregarUsuario(IConexionBD conexionBD) {
+    
+    public IniciarSesion(IConexionBD conexionBD) {
         this.conexionBD = conexionBD;
         this.em = this.conexionBD.crearConexion();
     }
-
+    
     @Override
     public void procesar(AbstractPeticion peticion) {
         PeticionUsuario pU = (PeticionUsuario)peticion;
         try {
             Usuario usuario = pU.getUsuario();
-            if (existeUsuario(usuario.getUsuario())) {
+            if (!validarUsuario(usuario)) {
                 return;
             }
-            em.getTransaction().begin();
-            em.persist(usuario);
-            em.getTransaction().commit();
-            em.close();
             
             construirPeticionLog(usuario);
-            construirPeticionNotificarClientes(usuario);
+            construirPeticionNotificarCliente(usuario);
             
         } catch (Exception ex) {
             Logger.getLogger(AgregarUsuario.class.getName()).log(Level.SEVERE, null, ex);
@@ -52,19 +55,19 @@ public class AgregarUsuario extends AbstractFuente {
         Blackboard bb = Blackboard.getInstance();
         bb.addProblem(peticion);
     }
-
+    
     public void construirPeticionLog(Usuario u){
-        String mensaje = "[USUARIO AGREGADO] [username: "+ u.getUsuario() +"]";
-        AbstractPeticion peticion = new PeticionLog(mensaje, LOGGEAR_INFO);
+        String mensaje = "[INICIO DE SESION] [username: "+ u.getUsuario() +"]";
+        AbstractPeticion peticion = new PeticionLog(LOGGEAR_INFO, mensaje);
         this.agregarProblema(peticion);
     }
     
-    public void construirPeticionNotificarClientes(Usuario usuario){
-        agregarProblema(new PeticionUsuario(NOTIFICAR_TODOS, usuario));
+    public void construirPeticionNotificarCliente(Usuario usuario){
+        // 
+        agregarProblema(new PeticionUsuario(NOTIFICAR_CLIENTE,usuario));
     }
-
-    public boolean existeUsuario(String usuario) {
-
+    
+    public boolean validarUsuario(Usuario usuario) {
         em.getTransaction().begin();
 
         Query query = em.createQuery(
@@ -72,20 +75,27 @@ public class AgregarUsuario extends AbstractFuente {
                 + "FROM Usuario u "
                 + "WHERE u.usuario = :usuario");
 
-        query.setParameter("usuario", usuario);
+        query.setParameter("usuario", usuario.getUsuario());
 
         List<Usuario> usuarios = query.getResultList();
 
         em.getTransaction().commit();
 
-        if (usuarios.isEmpty()) {
+        if (usuarios.get(0).getPassword().equals(usuario.getPassword())) {
+            return true;
+        }
+        else if(usuarios.isEmpty()){
+            System.out.println("-------------------------");
+            System.out.println("No existe el usuario");
+            System.out.println("-------------------------");
             return false;
         }
+        
         em.close();
         System.out.println("-------------------------");
-        System.out.println("El usuario ya existe");
+        System.out.println("No se inicio sesión");
         System.out.println("-------------------------");
-        return true;
+        return false;
     }
-
+    
 }
