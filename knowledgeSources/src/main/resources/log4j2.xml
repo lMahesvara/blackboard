@@ -6,15 +6,21 @@
         </Console>
         <NoSql name="MongoDbAppender">
             <MongoDb capped="true" collectionSize="104857600"
-                              databaseName="transacciones"
-                              collectionName="logs"
+                     databaseName="transacciones"
+                     collectionName="logs"
             />
         </NoSql>
     </Appenders>
     <Loggers>
-        <Root >
+        <Root level="INFO">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="MongoDbAppender"/>
         </Root>
+        <Logger name="org.hibernate" level="OFF" additivity="false">
+            <AppenderRef ref="Console" />
+        </Logger>
+        <Logger name="SQL dialect" level="OFF" additivity="false">
+            <AppenderRef ref="Console" />
+        </Logger>
     </Loggers>
 </Configuration>
