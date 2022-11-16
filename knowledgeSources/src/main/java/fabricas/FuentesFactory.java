@@ -2,7 +2,9 @@
 package fabricas;
 
 import conexion.ConexionBD;
+import fuentes.AgregarPublicacion;
 import fuentes.AgregarUsuario;
+import fuentes.IniciarSesion;
 import fuentes.LoguearTransaccion;
 import fuentes.NotificarCliente;
 import fuentes.NotificarClientes;
@@ -31,6 +33,10 @@ public class FuentesFactory implements IFuentesFactory{
             return new NotificarClientes();
         }else if(peticion.getPeticion().equals(NOTIFICAR_CLIENTE)){
             return new NotificarCliente();
+        }else if(peticion.getPeticion().equals(INICIAR_SESION)){
+            return new IniciarSesion(conexionBD);
+        }else if(peticion.getPeticion().equals(REGISTRAR_PUBLICACION)){
+            return new AgregarPublicacion(conexionBD);
         }
         return null;
     }

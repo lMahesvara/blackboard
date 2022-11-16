@@ -6,6 +6,7 @@ package fuentes;
 
 import blackboard.Blackboard;
 import entidades.Usuario;
+import helpers.Peticiones;
 import static helpers.Peticiones.LOGGEAR_INFO;
 import static helpers.Peticiones.NOTIFICAR_CLIENTE;
 import interfaces.AbstractFuente;
@@ -23,27 +24,27 @@ import peticiones.PeticionUsuario;
  *
  * @author Vastem
  */
-public class IniciarSesion extends AbstractFuente{
+public class IniciarSesion extends AbstractFuente {
+
     private final IConexionBD conexionBD;
     private final EntityManager em;
-    
+
     public IniciarSesion(IConexionBD conexionBD) {
         this.conexionBD = conexionBD;
         this.em = this.conexionBD.crearConexion();
     }
-    
+
     @Override
     public void procesar(AbstractPeticion peticion) {
-        PeticionUsuario pU = (PeticionUsuario)peticion;
+        PeticionUsuario pU = (PeticionUsuario) peticion;
         try {
-            Usuario usuario = pU.getUsuario();
-            if (!validarUsuario(usuario)) {
-                return;
+            Usuario usuario = validarUsuario(pU.getUsuario());
+            if (usuario != null) {
+                construirPeticionLog(usuario);
             }
-            
-            construirPeticionLog(usuario);
-            construirPeticionNotificarCliente(usuario);
-            
+
+            construirPeticionNotificarCliente(usuario, peticion.getHashcodeSC());
+
         } catch (Exception ex) {
             Logger.getLogger(AgregarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -55,19 +56,19 @@ public class IniciarSesion extends AbstractFuente{
         Blackboard bb = Blackboard.getInstance();
         bb.addProblem(peticion);
     }
-    
-    public void construirPeticionLog(Usuario u){
-        String mensaje = "[INICIO DE SESION] [username: "+ u.getUsuario() +"]";
+
+    public void construirPeticionLog(Usuario u) {
+        String mensaje = "[INICIO DE SESION] [username: " + u.getUsuario() + "]";
         AbstractPeticion peticion = new PeticionLog(LOGGEAR_INFO, mensaje);
         this.agregarProblema(peticion);
     }
-    
-    public void construirPeticionNotificarCliente(Usuario usuario){
+
+    public void construirPeticionNotificarCliente(Usuario usuario, Integer hashcodeSC) {
         // 
-        agregarProblema(new PeticionUsuario(NOTIFICAR_CLIENTE,usuario));
+        agregarProblema(new PeticionUsuario(NOTIFICAR_CLIENTE, Peticiones.INICIAR_SESION, hashcodeSC, null, usuario));
     }
-    
-    public boolean validarUsuario(Usuario usuario) {
+
+    public Usuario validarUsuario(Usuario usuario) {
         em.getTransaction().begin();
 
         Query query = em.createQuery(
@@ -82,20 +83,19 @@ public class IniciarSesion extends AbstractFuente{
         em.getTransaction().commit();
 
         if (usuarios.get(0).getPassword().equals(usuario.getPassword())) {
-            return true;
-        }
-        else if(usuarios.isEmpty()){
+            return usuarios.get(0);
+        } else if (usuarios.isEmpty()) {
             System.out.println("-------------------------");
             System.out.println("No existe el usuario");
             System.out.println("-------------------------");
-            return false;
+            return null;
         }
-        
+
         em.close();
         System.out.println("-------------------------");
         System.out.println("No se inicio sesión");
         System.out.println("-------------------------");
-        return false;
+        return null;
     }
-    
+
 }

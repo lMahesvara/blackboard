@@ -29,7 +29,9 @@ public class LoguearTransaccion extends AbstractFuente{
 
     public void definirTransaccion(PeticionLog pL){
         if(pL.getPeticion().equals(LOGGEAR_INFO)){
+            System.out.println(pL.getMensaje());
             log.info(pL.getMensaje());
+            System.out.println(pL.getMensaje());
         }else if(pL.getPeticion().equals(LOGGEAR_ERROR)){
             log.error(pL.getMensaje());
         }else if(pL.getPeticion().equals(LOGGEAR_ADVERTENCIA)){

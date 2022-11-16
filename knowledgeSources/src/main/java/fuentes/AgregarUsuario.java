@@ -55,7 +55,7 @@ public class AgregarUsuario extends AbstractFuente {
     }
 
     public void construirPeticionLog(PeticionUsuario peticion){
-        String mensaje = "[USUARIO AGREGADO] [username: "+ peticion.getUsuario() +"]";
+        String mensaje = "[USUARIO AGREGADO] [username: "+ peticion.getUsuario().getUsuario() +"]";
         AbstractPeticion nuevaPeticion = new PeticionLog(LOGGEAR_INFO, peticion.getHashcodeSC(), mensaje);
         this.agregarProblema(nuevaPeticion);
     }

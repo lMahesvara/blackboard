@@ -54,6 +54,7 @@ public class Server extends Thread implements IServer {
 
     public void notificarTodos(AbstractPeticion peticion) {
         sockets.forEach(socket -> {
+            System.out.println("Notificar ");
             socket.sendResponse(peticion);
         });
     }
