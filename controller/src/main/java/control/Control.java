@@ -27,7 +27,7 @@ public class Control {
     public void preguntarPeticion(){
         while(true){
             try {
-                Thread.sleep(3000);
+                Thread.sleep(1000);
                 if(fachadaBb.existenPeticiones()){
                     System.out.println("Entro");
                     AbstractPeticion peticion = fachadaBb.getPeticion();
