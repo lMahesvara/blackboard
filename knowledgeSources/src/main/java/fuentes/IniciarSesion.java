@@ -81,15 +81,14 @@ public class IniciarSesion extends AbstractFuente {
         List<Usuario> usuarios = query.getResultList();
 
         em.getTransaction().commit();
-
-        if (usuarios.get(0).getPassword().equals(usuario.getPassword())) {
-            return usuarios.get(0);
-        } else if (usuarios.isEmpty()) {
+        if (usuarios.isEmpty()) {
             System.out.println("-------------------------");
             System.out.println("No existe el usuario");
             System.out.println("-------------------------");
             return null;
-        }
+        }else if (usuarios.get(0).getPassword().equals(usuario.getPassword())) {
+            return usuarios.get(0);
+        } 
 
         em.close();
         System.out.println("-------------------------");
