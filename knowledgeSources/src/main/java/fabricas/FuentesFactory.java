@@ -1,6 +1,7 @@
 package fabricas;
 
 import conexion.ConexionBD;
+import fuentes.AgregarComentario;
 import fuentes.AgregarPublicacion;
 import fuentes.AgregarUsuario;
 import fuentes.ConsultarPublicaciones;
@@ -38,6 +39,8 @@ public class FuentesFactory implements IFuentesFactory {
             return new AgregarPublicacion(conexionBD);
         } else if (peticion.getPeticion().equals(CONSULTAR_PUBLICACIONES)) {
             return new ConsultarPublicaciones(conexionBD);
+        }else if (peticion.getPeticion().equals(AGREGAR_COMENTARIO)) {
+            return new AgregarComentario(conexionBD);
         }
         return null;
     }
