@@ -7,6 +7,7 @@ import fuentes.AgregarUsuario;
 import fuentes.ConsultarPublicaciones;
 import fuentes.EditarUsuario;
 import fuentes.IniciarSesion;
+import fuentes.IniciarSesionFb;
 import fuentes.LoguearTransaccion;
 import fuentes.NotificarCliente;
 import fuentes.NotificarClientes;
@@ -44,6 +45,8 @@ public class FuentesFactory implements IFuentesFactory {
             return new AgregarComentario(conexionBD);
         }else if (peticion.getPeticion().equals(ACTUALIZAR_USUARIO)) {
             return new EditarUsuario(conexionBD);
+        }else if (peticion.getPeticion().equals(INICIAR_SESION_FB)){
+            return new IniciarSesionFb(conexionBD);
         }
         return null;
     }
