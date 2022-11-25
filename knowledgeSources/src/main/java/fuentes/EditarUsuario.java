@@ -11,6 +11,8 @@ import static helpers.Peticiones.LOGGEAR_INFO;
 import interfaces.AbstractFuente;
 import interfaces.IConexionBD;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import peticiones.AbstractPeticion;
@@ -35,12 +37,19 @@ public class EditarUsuario extends AbstractFuente {
         try {
             Usuario usuario = pU.getUsuario();
             
+            if(existeUsuario(usuario.getUsuario())){
+                pU.setUsuario(null);
+                construirPeticionNotificarCliente(pU);
+                return;
+            }
+            
             em.getTransaction().begin();
             
             Usuario user = em.find(Usuario.class, usuario.getId());
             if(user == null){
                 return;
             }
+            
             
             user.setUsuario(usuario.getUsuario());
             user.setPassword(usuario.getPassword());
@@ -76,4 +85,28 @@ public class EditarUsuario extends AbstractFuente {
         agregarProblema(new PeticionUsuario(Peticiones.NOTIFICAR_CLIENTE, Peticiones.ACTUALIZAR_USUARIO, peticion.getHashcodeSC(), null,peticion.getUsuario()));
     }
     
+    public boolean existeUsuario(String usuario) {
+
+        em.getTransaction().begin();
+
+        Query query = em.createQuery(
+                "SELECT u "
+                + "FROM Usuario u "
+                + "WHERE u.usuario = :usuario");
+
+        query.setParameter("usuario", usuario);
+
+        List<Usuario> usuarios = query.getResultList();
+
+        em.getTransaction().commit();
+
+        if (usuarios.isEmpty()) {
+            return false;
+        }
+        em.close();
+        System.out.println("-------------------------");
+        System.out.println("El usuario ya existe");
+        System.out.println("-------------------------");
+        return true;
+    }
 }
