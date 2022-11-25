@@ -1,12 +1,15 @@
 package fuentes;
 
 import blackboard.Blackboard;
+import entidades.Hashtag;
 import entidades.Publicacion;
 import helpers.Peticiones;
 import static helpers.Peticiones.LOGGEAR_INFO;
 import interfaces.AbstractFuente;
 import interfaces.IConexionBD;
 import jakarta.persistence.EntityManager;
+import java.util.List;
+import org.hibernate.Session;
 import peticiones.AbstractPeticion;
 import peticiones.PeticionLog;
 import peticiones.PeticionPublicacion;
@@ -22,14 +25,28 @@ public class AgregarPublicacion extends AbstractFuente {
     }
 
     public void procesar(AbstractPeticion peticion) {
+        Session session = em.unwrap(Session.class);
         PeticionPublicacion pP = (PeticionPublicacion) peticion;
         Publicacion publicacion = pP.getPublicacion();
-        try {
-            em.getTransaction().begin();
-            em.persist(publicacion);
-            em.getTransaction().commit();
-            em.close();
 
+        List<Hashtag> hashtags = publicacion.getHashtag();
+        publicacion.setHashtag(null);
+        try {
+            session.getTransaction().begin();
+            Long id = (Long)session.save(publicacion);
+            session.getTransaction().commit();
+            
+            session.getTransaction().begin();
+            Publicacion p = new Publicacion(id);
+            
+            for(int i = 0; i < hashtags.size(); i++){
+                hashtags.get(i).setPublicacion(p);
+                session.save(hashtags.get(i));
+            }
+            session.getTransaction().commit();
+            
+            session.close();
+            
             construirPeticionLog(pP);
             construirPeticionNotificarClientes(pP);
         } catch (Exception e) {

@@ -5,6 +5,7 @@ import fuentes.AgregarComentario;
 import fuentes.AgregarPublicacion;
 import fuentes.AgregarUsuario;
 import fuentes.ConsultarPublicaciones;
+import fuentes.EditarUsuario;
 import fuentes.IniciarSesion;
 import fuentes.LoguearTransaccion;
 import fuentes.NotificarCliente;
@@ -41,6 +42,8 @@ public class FuentesFactory implements IFuentesFactory {
             return new ConsultarPublicaciones(conexionBD);
         }else if (peticion.getPeticion().equals(AGREGAR_COMENTARIO)) {
             return new AgregarComentario(conexionBD);
+        }else if (peticion.getPeticion().equals(ACTUALIZAR_USUARIO)) {
+            return new EditarUsuario(conexionBD);
         }
         return null;
     }
