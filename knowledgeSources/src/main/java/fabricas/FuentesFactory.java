@@ -4,7 +4,9 @@ import conexion.ConexionBD;
 import fuentes.AgregarComentario;
 import fuentes.AgregarPublicacion;
 import fuentes.AgregarUsuario;
+import fuentes.ConsultarNotificaciones;
 import fuentes.ConsultarPublicaciones;
+import fuentes.CrearNotificacion;
 import fuentes.EditarUsuario;
 import fuentes.IniciarSesion;
 import fuentes.IniciarSesionFb;
@@ -47,6 +49,10 @@ public class FuentesFactory implements IFuentesFactory {
             return new EditarUsuario(conexionBD);
         }else if (peticion.getPeticion().equals(INICIAR_SESION_FB)){
             return new IniciarSesionFb(conexionBD);
+        }else if (peticion.getPeticion().equals(NOTIFICACION_CORREO)  || peticion.getPeticion().equals(NOTIFICACION_SMS) || peticion.getPeticion().equals(NOTIFICACION_TODOS)){
+            return new CrearNotificacion(conexionBD);
+        }else if (peticion.getPeticion().equals(CONSULTAR_NOTIFICACIONES)){
+            return new ConsultarNotificaciones(conexionBD);
         }
         return null;
     }
