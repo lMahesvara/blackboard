@@ -45,6 +45,7 @@ public class SocketCliente extends Thread {
     public void sendResponse(AbstractPeticion peticion) {
         try {
             salida = new PrintStream(socket.getOutputStream());
+            System.out.println(peticion);
             String json = ConvertirPeticion.JSONConverter(peticion);
             salida.println(json);
         } catch (IOException ex) {

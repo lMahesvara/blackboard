@@ -1,6 +1,7 @@
 package fuentes;
 
 import blackboard.Blackboard;
+import entidades.Etiqueta;
 import entidades.Hashtag;
 import entidades.Publicacion;
 import entidades.Usuario;
@@ -34,14 +35,21 @@ public class EditarPublicacion extends AbstractFuente {
             Publicacion publicacion = pP.getPublicacion();
 
             em.getTransaction().begin();
-
+            Query query;
             Publicacion publi = em.find(Publicacion.class, publicacion.getId());
             if (publicacion == null) {
                 return;
             }
             
             //Eliminar hashtags antiguos
-            Query query = em.createNativeQuery("delete from hashtags where id_publicacion = ?");
+             query = em.createNativeQuery("delete from hashtags where id_publicacion = ?");
+            query.setParameter(1, publi.getId());
+            query.executeUpdate();
+            em.getTransaction().commit();
+            
+            //Eliminar etiquetas antiguas
+            em.getTransaction().begin();
+            query = em.createNativeQuery("delete from etiquetas where id_publicacion = ?");
             query.setParameter(1, publi.getId());
             query.executeUpdate();
             em.getTransaction().commit();
@@ -49,13 +57,14 @@ public class EditarPublicacion extends AbstractFuente {
             //Editar Publicacion
             em.getTransaction().begin();
             List<Hashtag> hashtags = publicacion.getHashtag();
+            List<Etiqueta> etiquetas = publicacion.getEtiquetas();
             publi.setHashtag(null);
+            publi.setEtiquetas(null);
             publi.setTexto(publicacion.getTexto());
             publi.setImagen(publicacion.getImagen());
 
             em.persist(publi);
             em.getTransaction().commit();
-            
             
             //Crear hashtags
             em.getTransaction().begin();
@@ -64,8 +73,26 @@ public class EditarPublicacion extends AbstractFuente {
                 em.persist(hashtag);
             });
             em.getTransaction().commit();
+            
+            //Crear etiquetas
+            em.getTransaction().begin();
+            for(int i = 0; i < etiquetas.size(); i++){
+                query = em.createQuery(
+                                        "SELECT u "
+                                        + "FROM Usuario u "
+                                        + "WHERE u.usuario = :usuario");
+                query.setParameter("usuario", etiquetas.get(i).getEtiquetado().getUsuario());
+                Usuario user = (Usuario) query.getSingleResult();
+                
+                if(user != null){
+                    etiquetas.get(i).setPublicacion(publi);
+                    etiquetas.get(i).setEtiquetado(user);
+                    em.persist(etiquetas.get(i));  
+                }
+            }
+            em.getTransaction().commit();
             em.close();
-
+            
             construirPeticionLog(pP);
             construirPeticionNotificarCliente(pP);
 
