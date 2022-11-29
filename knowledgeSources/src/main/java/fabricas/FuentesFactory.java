@@ -5,7 +5,9 @@ import fuentes.AgregarComentario;
 import fuentes.AgregarPublicacion;
 import fuentes.AgregarUsuario;
 import fuentes.ConsultarPublicaciones;
+import fuentes.EditarPublicacion;
 import fuentes.EditarUsuario;
+import fuentes.EliminarPublicacion;
 import fuentes.IniciarSesion;
 import fuentes.IniciarSesionFb;
 import fuentes.LoguearTransaccion;
@@ -47,6 +49,10 @@ public class FuentesFactory implements IFuentesFactory {
             return new EditarUsuario(conexionBD);
         }else if (peticion.getPeticion().equals(INICIAR_SESION_FB)){
             return new IniciarSesionFb(conexionBD);
+        }else if (peticion.getPeticion().equals(ELIMINAR_PUBLICACION)) {
+            return new EliminarPublicacion(conexionBD);
+        }else if (peticion.getPeticion().equals(ACTUALIZAR_PUBLICACION)) {
+            return new EditarPublicacion(conexionBD);
         }
         return null;
     }
