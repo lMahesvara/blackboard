@@ -41,7 +41,7 @@ public class FuentesFactory implements IFuentesFactory {
             return new IniciarSesion(conexionBD);
         } else if (peticion.getPeticion().equals(REGISTRAR_PUBLICACION)) {
             return new AgregarPublicacion(conexionBD);
-        } else if (peticion.getPeticion().equals(CONSULTAR_PUBLICACIONES)) {
+        } else if (peticion.getPeticion().equals(CONSULTAR_PUBLICACIONES) || peticion.getPeticion().equals(CONSULTAR_PUBLICACIONES_HASHTAG)) {
             return new ConsultarPublicaciones(conexionBD);
         }else if (peticion.getPeticion().equals(AGREGAR_COMENTARIO)) {
             return new AgregarComentario(conexionBD);
