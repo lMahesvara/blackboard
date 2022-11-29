@@ -4,8 +4,10 @@ import conexion.ConexionBD;
 import fuentes.AgregarComentario;
 import fuentes.AgregarPublicacion;
 import fuentes.AgregarUsuario;
+import fuentes.ConsultarNotificaciones;
 import fuentes.ConsultarPublicaciones;
 import fuentes.EditarPublicacion;
+import fuentes.CrearNotificacion;
 import fuentes.EditarUsuario;
 import fuentes.EliminarPublicacion;
 import fuentes.IniciarSesion;
@@ -41,7 +43,7 @@ public class FuentesFactory implements IFuentesFactory {
             return new IniciarSesion(conexionBD);
         } else if (peticion.getPeticion().equals(REGISTRAR_PUBLICACION)) {
             return new AgregarPublicacion(conexionBD);
-        } else if (peticion.getPeticion().equals(CONSULTAR_PUBLICACIONES)) {
+        } else if (peticion.getPeticion().equals(CONSULTAR_PUBLICACIONES) || peticion.getPeticion().equals(CONSULTAR_PUBLICACIONES_HASHTAG)) {
             return new ConsultarPublicaciones(conexionBD);
         }else if (peticion.getPeticion().equals(AGREGAR_COMENTARIO)) {
             return new AgregarComentario(conexionBD);
@@ -53,6 +55,10 @@ public class FuentesFactory implements IFuentesFactory {
             return new EliminarPublicacion(conexionBD);
         }else if (peticion.getPeticion().equals(ACTUALIZAR_PUBLICACION)) {
             return new EditarPublicacion(conexionBD);
+        }else if (peticion.getPeticion().equals(NOTIFICACION_CORREO)  || peticion.getPeticion().equals(NOTIFICACION_SMS) || peticion.getPeticion().equals(NOTIFICACION_TODOS)){
+            return new CrearNotificacion(conexionBD);
+        }else if (peticion.getPeticion().equals(CONSULTAR_NOTIFICACIONES)){
+            return new ConsultarNotificaciones(conexionBD);
         }
         return null;
     }
