@@ -1,7 +1,6 @@
 
 package interfaces;
 
-import entidades.BlackBoardObject;
 import peticiones.AbstractPeticion;
 
 public abstract class AbstractFuente {
