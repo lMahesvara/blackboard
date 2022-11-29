@@ -33,14 +33,16 @@ public class EliminarPublicacion extends AbstractFuente {
                 pP.setPublicacion(null);
                 return;
             }
-            Publicacion instancia = em.merge(publicacion);
-            em.remove(instancia);
+            Publicacion p =em.find(Publicacion.class, publicacion.getId());
+            em.remove(p);
             em.getTransaction().commit();
             em.close();
 
             construirPeticionLog(pP);
             construirPeticionNotificarClientes(pP);
+            
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
