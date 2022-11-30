@@ -7,6 +7,7 @@ import static helpers.Peticiones.LOGGEAR_INFO;
 import interfaces.AbstractFuente;
 import interfaces.IConexionBD;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import peticiones.AbstractPeticion;
 import peticiones.PeticionLog;
 import peticiones.PeticionComentario;
@@ -25,14 +26,22 @@ public class EliminarComentario extends AbstractFuente {
     public void procesar(AbstractPeticion peticion) {
         PeticionComentario pC = (PeticionComentario) peticion;
         Comentario comentario = pC.getComentario();
+        Long id = comentario.getId();
+        System.out.println("ID DEL COMENTARIOOOOOOOOOOOoooO: " + comentario.getId());
         try {
+            
             em.getTransaction().begin();
-            if (comentario == null) {
-                pC.setComentario(null);
-                return;
-            }
-            Comentario c = em.find(Comentario.class, comentario.getId());
-            em.remove(c);
+//            if (comentario == null) {
+//                pC.setComentario(null);
+//                return;
+//            }
+//            Comentario c = em.find(Comentario.class, comentario.getId());
+//            em.remove(c);
+            
+            Query q =em.createNativeQuery("DELETE FROM comentarios "
+                                            + "WHERE comentarios.id_comentario =" + id, Comentario.class);
+            q.executeUpdate();
+
             em.getTransaction().commit();
             em.close();
 
