@@ -33,15 +33,6 @@ public class ConsultarNotificaciones extends AbstractFuente{
 
         try {
             em.getTransaction().begin();
-            //TODO: Checar si se regresa la mas reciente al inicio
-            
-//            Query query = em.createQuery(
-//                "SELECT u "
-//                + "FROM Usuario u "
-//                + "WHERE u.usuario = :usuario");
-//
-//        query.setParameter("usuario", usuario);
-
             Query query = em.createQuery(
                     "SELECT n "
                     + "FROM Notificacion n "

@@ -4,6 +4,7 @@ import conexion.ConexionBD;
 import fuentes.AgregarComentario;
 import fuentes.AgregarPublicacion;
 import fuentes.AgregarUsuario;
+import fuentes.CerrarSesion;
 import fuentes.ConsultarNotificaciones;
 import fuentes.ConsultarPublicaciones;
 import fuentes.EditarPublicacion;
@@ -59,6 +60,8 @@ public class FuentesFactory implements IFuentesFactory {
             return new CrearNotificacion(conexionBD);
         }else if (peticion.getPeticion().equals(CONSULTAR_NOTIFICACIONES)){
             return new ConsultarNotificaciones(conexionBD);
+        }else if (peticion.getPeticion().equals(CERRAR_SESION)){
+            return new CerrarSesion(conexionBD);
         }
         return null;
     }

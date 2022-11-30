@@ -40,7 +40,7 @@ public class CrearNotificacion extends AbstractFuente{
     private final IConexionBD conexionBD;
     private final EntityManager em;
     public static final String ACCOUNT_SID = "ACa58a0e7d3fc7d1accba783a4622adaee";
-    public static final String AUTH_TOKEN = "24ff0c4dcccd24f3eea0ea678596b263";
+    public static final String AUTH_TOKEN = "84478c89e453d179008610ae11982099";
 
     public CrearNotificacion(IConexionBD conexionBD) {
         this.conexionBD = conexionBD;

@@ -2,6 +2,7 @@ package blackboard;
 
 import entidades.Usuario;
 import helpers.ConvertirPeticion;
+import static helpers.Peticiones.CERRAR_SESION;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,12 +16,10 @@ import java.util.logging.Logger;
 import peticiones.AbstractPeticion;
 
 public class SocketCliente extends Thread {
-
     private Socket socket;
     private BufferedReader entrada;
     private PrintStream salida;
     
-
     public SocketCliente(Socket socket) {
         this.socket = socket;
     }
@@ -29,7 +28,7 @@ public class SocketCliente extends Thread {
     public void run() {
         //Obtener ip address
         try {
-            while (socket.isConnected()) {
+            while (!socket.isClosed()) {
                 //Obtener el Json de la peticion
                 entrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String peticion = entrada.readLine();
@@ -38,16 +37,29 @@ public class SocketCliente extends Thread {
                 //Generar hilo con la peticion
                 ejecutarNuevoHilo(peticion);
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            Logger.getLogger(SocketCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void sendResponse(AbstractPeticion peticion) {
         try {
             salida = new PrintStream(socket.getOutputStream());
-            System.out.println(peticion);
+            System.out.println("Se enviara una peticion: "+ this.socket +peticion);
+            
             String json = ConvertirPeticion.JSONConverter(peticion);
             salida.println(json);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(SocketCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void closeAll() {
+        try {
+            salida.close();
+            entrada.close();
+            socket.close();
         } catch (IOException ex) {
             Logger.getLogger(SocketCliente.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -1,14 +1,17 @@
 package blackboard;
 
+import static helpers.Peticiones.CERRAR_APP;
+import static helpers.Peticiones.CERRAR_SESION;
 import interfaces.IServer;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import peticiones.AbstractPeticion;
 
 public class Server extends Thread implements IServer {
-
     List<SocketCliente> sockets = new LinkedList<>();
     private static Server instance;
 
@@ -47,8 +50,8 @@ public class Server extends Thread implements IServer {
                 System.out.println(sockets.size());
 
             }
-        } catch (Exception e) {
-
+        } catch (Exception ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -60,10 +63,23 @@ public class Server extends Thread implements IServer {
     }
     
     public void notificarCliente(AbstractPeticion peticion){
-        sockets.forEach(socket -> {
-            if(socket.hashCode() == peticion.getHashcodeSC()){
-                socket.sendResponse(peticion);
-            }
-        });
+        if(peticion.getPeticionRespuesta().equals(CERRAR_APP)){
+            sockets.forEach(socket -> {
+                if(socket.hashCode() == peticion.getHashcodeSC()){
+                    socket.sendResponse(peticion);
+                    socket.closeAll();
+                    sockets.remove(socket);
+                    System.out.println("Socket cerrado");
+                }
+            });        
+        }else{
+            System.out.println("Notificar cliente: ");
+            sockets.forEach(socket -> {
+               if(socket.hashCode() == peticion.getHashcodeSC()){
+                   System.out.println(socket);
+                   socket.sendResponse(peticion);
+               }
+            });       
+        }
     }
 }
