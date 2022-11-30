@@ -10,6 +10,7 @@ import fuentes.ConsultarPublicaciones;
 import fuentes.EditarPublicacion;
 import fuentes.CrearNotificacion;
 import fuentes.EditarUsuario;
+import fuentes.EliminarComentario;
 import fuentes.EliminarPublicacion;
 import fuentes.IniciarSesion;
 import fuentes.IniciarSesionFb;
@@ -62,6 +63,8 @@ public class FuentesFactory implements IFuentesFactory {
             return new ConsultarNotificaciones(conexionBD);
         }else if (peticion.getPeticion().equals(CERRAR_SESION)){
             return new CerrarSesion(conexionBD);
+        }else if (peticion.getPeticion().equals(ELIMINAR_COMENTARIO)){
+            return new EliminarComentario(conexionBD);
         }
         return null;
     }
