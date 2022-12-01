@@ -2,17 +2,17 @@
 package control;
 
 import blackboard.Server;
-import interfaces.IFachadaBlackboard;
 import interfaces.IManejadorKS;
 import peticiones.AbstractPeticion;
+import interfaces.IFachadaBlackboardControl;
 
 public class Control {
 
     private IManejadorKS manejadorKS;
-    private static IFachadaBlackboard fachadaBb;
+    private static IFachadaBlackboardControl fachadaBb;
     public Control() {
         this.manejadorKS = new ManejadorKS();
-        this.fachadaBb = new FachadaBlackboard();
+        this.fachadaBb = new FachadaBlackboardControl();
     }
 
     public static void main(String[] args){

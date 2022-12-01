@@ -2,14 +2,14 @@
 package control;
 
 import blackboard.Blackboard;
-import interfaces.IFachadaBlackboard;
 import peticiones.AbstractPeticion;
+import interfaces.IFachadaBlackboardControl;
 
-public class FachadaBlackboard implements IFachadaBlackboard {
+public class FachadaBlackboardControl implements IFachadaBlackboardControl {
 
     private Blackboard blackboard;
 
-    public FachadaBlackboard() {
+    public FachadaBlackboardControl() {
         blackboard = Blackboard.getInstance();
     }
 

@@ -1,14 +1,15 @@
 package fuentes;
 
-import blackboard.Server;
+import blackboard.FachadaBlackboard;
 import interfaces.AbstractFuente;
+import interfaces.IFachadaBlackboard;
 import peticiones.AbstractPeticion;
 
 public class NotificarClientes extends AbstractFuente {
 
     @Override
     public void procesar(AbstractPeticion peticion) {
-        Server server = Server.getInstance();
-        server.notificarTodos(peticion);
+        IFachadaBlackboard fachadaBlack = new FachadaBlackboard();
+        fachadaBlack.notificarCliente(peticion);
     }
 }

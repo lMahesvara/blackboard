@@ -4,7 +4,6 @@
  */
 package fuentes;
 
-import blackboard.Blackboard;
 import entidades.Usuario;
 import helpers.Peticiones;
 import static helpers.Peticiones.LOGGEAR_INFO;
@@ -54,11 +53,10 @@ public class IniciarSesion extends AbstractFuente {
     public void construirPeticionLog(Usuario u) {
         String mensaje = "[INICIO DE SESION] [username: " + u.getUsuario() + "]";
         AbstractPeticion peticion = new PeticionLog(LOGGEAR_INFO, mensaje);
-        this.agregarProblema(peticion);
+        agregarProblema(peticion);
     }
 
     public void construirPeticionNotificarCliente(Usuario usuario, Integer hashcodeSC) {
-        // 
         agregarProblema(new PeticionUsuario(NOTIFICAR_CLIENTE, Peticiones.INICIAR_SESION, hashcodeSC, null, usuario));
     }
 

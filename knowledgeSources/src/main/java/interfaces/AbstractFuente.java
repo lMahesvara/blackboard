@@ -1,7 +1,6 @@
 
 package interfaces;
 
-import blackboard.Blackboard;
 import blackboard.FachadaBlackboard;
 import peticiones.AbstractPeticion;
 
