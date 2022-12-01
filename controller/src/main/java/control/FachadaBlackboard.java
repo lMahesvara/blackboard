@@ -28,4 +28,9 @@ public class FachadaBlackboard implements IFachadaBlackboard {
         blackboard.removePeticion();
     }
 
+    @Override
+    public void addPeticion(AbstractPeticion peticion) {
+        blackboard.addProblem(peticion);
+    }
+
 }
