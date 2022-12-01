@@ -4,7 +4,6 @@
  */
 package fuentes;
 
-import blackboard.Blackboard;
 import entidades.Usuario;
 import helpers.Peticiones;
 import static helpers.Peticiones.LOGGEAR_INFO;
@@ -37,7 +36,7 @@ public class EditarUsuario extends AbstractFuente {
         try {
             Usuario usuario = pU.getUsuario();
             
-            if(existeUsuario(usuario.getUsuario())){
+            if(existeUsuario(usuario)){
                 pU.setUsuario(null);
                 construirPeticionNotificarClientes(pU);
                 return;
@@ -49,7 +48,6 @@ public class EditarUsuario extends AbstractFuente {
             if(user == null){
                 return;
             }
-            
             
             user.setUsuario(usuario.getUsuario());
             user.setPassword(usuario.getPassword());
@@ -80,16 +78,18 @@ public class EditarUsuario extends AbstractFuente {
         agregarProblema(new PeticionUsuario(Peticiones.NOTIFICAR_TODOS, Peticiones.ACTUALIZAR_USUARIO, peticion.getHashcodeSC(), null,peticion.getUsuario()));
     }
     
-    public boolean existeUsuario(String usuario) {
+    public boolean existeUsuario(Usuario usuario) {
 
         em.getTransaction().begin();
 
         Query query = em.createQuery(
                 "SELECT u "
                 + "FROM Usuario u "
-                + "WHERE u.usuario = :usuario");
+                + "WHERE u.usuario = :usuario "
+                + "AND u.id <> :id");
 
-        query.setParameter("usuario", usuario);
+        query.setParameter("usuario", usuario.getUsuario());
+        query.setParameter("id", usuario.getId());
 
         List<Usuario> usuarios = query.getResultList();
 
