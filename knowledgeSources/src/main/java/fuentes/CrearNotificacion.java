@@ -88,11 +88,6 @@ public class CrearNotificacion extends AbstractFuente{
         }
     }
 
-    public void agregarProblema(AbstractPeticion peticion) {
-        Blackboard bb = Blackboard.getInstance();
-        bb.addProblem(peticion);
-    }
-
     public void construirPeticionLog(PeticionNotificacion peticion ) {
         String mensaje = "[NOTIFICACION AGREGADA] [ID Usuario: " + peticion.getNotificacion().getRemitente()+ "]";
         AbstractPeticion nuevaPeticion = new PeticionLog(LOGGEAR_INFO, peticion.getHashcodeSC(), mensaje);

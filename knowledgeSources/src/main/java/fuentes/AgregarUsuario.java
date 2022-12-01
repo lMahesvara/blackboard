@@ -48,12 +48,6 @@ public class AgregarUsuario extends AbstractFuente {
 
     }
 
-    @Override
-    public void agregarProblema(AbstractPeticion peticion) {
-        Blackboard bb = Blackboard.getInstance();
-        bb.addProblem(peticion);
-    }
-
     public void construirPeticionLog(PeticionUsuario peticion){
         String mensaje = "[USUARIO AGREGADO] [username: "+ peticion.getUsuario().getUsuario() +"]";
         AbstractPeticion nuevaPeticion = new PeticionLog(LOGGEAR_INFO, peticion.getHashcodeSC(), mensaje);

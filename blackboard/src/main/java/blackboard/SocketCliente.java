@@ -38,7 +38,9 @@ public class SocketCliente extends Thread {
                 ejecutarNuevoHilo(peticion);
             }
         } catch (Exception ex) {
-            Logger.getLogger(SocketCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Server.getInstance().cerrarSocket(this);
+            System.out.println("SE CERRÓ EL SOCKET");
+            //Logger.getLogger(SocketCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -49,7 +51,6 @@ public class SocketCliente extends Thread {
             
             String json = ConvertirPeticion.JSONConverter(peticion);
             salida.println(json);
-            
         } catch (IOException ex) {
             Logger.getLogger(SocketCliente.class.getName()).log(Level.SEVERE, null, ex);
         }

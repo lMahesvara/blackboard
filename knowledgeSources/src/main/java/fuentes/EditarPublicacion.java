@@ -1,6 +1,5 @@
 package fuentes;
 
-import blackboard.Blackboard;
 import entidades.Etiqueta;
 import entidades.Hashtag;
 import entidades.Publicacion;
@@ -17,7 +16,6 @@ import java.util.logging.Logger;
 import peticiones.AbstractPeticion;
 import peticiones.PeticionLog;
 import peticiones.PeticionPublicacion;
-import peticiones.PeticionUsuario;
 
 public class EditarPublicacion extends AbstractFuente {
 
@@ -94,16 +92,11 @@ public class EditarPublicacion extends AbstractFuente {
             em.close();
             
             construirPeticionLog(pP);
-            construirPeticionNotificarCliente(pP);
+            construirPeticionNotificarClientes(pP);
 
         } catch (Exception ex) {
             Logger.getLogger(AgregarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void agregarProblema(AbstractPeticion peticion) {
-        Blackboard bb = Blackboard.getInstance();
-        bb.addProblem(peticion);
     }
 
     public void construirPeticionLog(PeticionPublicacion peticion) {
@@ -112,7 +105,8 @@ public class EditarPublicacion extends AbstractFuente {
         this.agregarProblema(nuevaPeticion);
     }
 
-    public void construirPeticionNotificarCliente(PeticionPublicacion peticion) {
-        agregarProblema(new PeticionPublicacion(Peticiones.NOTIFICAR_CLIENTE, Peticiones.ACTUALIZAR_PUBLICACION, peticion.getHashcodeSC(), null, peticion.getPublicacion()));
+    public void construirPeticionNotificarClientes(PeticionPublicacion peticion) {
+        agregarProblema(new PeticionPublicacion(Peticiones.NOTIFICAR_TODOS, Peticiones.ACTUALIZAR_PUBLICACION, peticion.getHashcodeSC(), null, peticion.getPublicacion()));
     }
 }
+ 

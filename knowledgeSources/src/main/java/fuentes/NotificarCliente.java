@@ -18,9 +18,4 @@ public class NotificarCliente extends AbstractFuente{
         Server server = Server.getInstance();
         server.notificarCliente(peticion);
     }
-
-    @Override
-    public void agregarProblema(AbstractPeticion peticion) {
-        
-    }
 }

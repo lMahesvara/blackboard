@@ -39,7 +39,7 @@ public class EditarUsuario extends AbstractFuente {
             
             if(existeUsuario(usuario.getUsuario())){
                 pU.setUsuario(null);
-                construirPeticionNotificarCliente(pU);
+                construirPeticionNotificarClientes(pU);
                 return;
             }
             
@@ -63,16 +63,11 @@ public class EditarUsuario extends AbstractFuente {
             em.close();
             
             construirPeticionLog(pU);
-            construirPeticionNotificarCliente(pU);
+            construirPeticionNotificarClientes(pU);
             
         } catch (Exception ex) {
             Logger.getLogger(AgregarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    public void agregarProblema(AbstractPeticion peticion){
-        Blackboard bb = Blackboard.getInstance();
-        bb.addProblem(peticion);
     }
     
     public void construirPeticionLog(PeticionUsuario peticion){
@@ -81,8 +76,8 @@ public class EditarUsuario extends AbstractFuente {
         this.agregarProblema(nuevaPeticion);
     }
     
-    public void construirPeticionNotificarCliente(PeticionUsuario peticion){
-        agregarProblema(new PeticionUsuario(Peticiones.NOTIFICAR_CLIENTE, Peticiones.ACTUALIZAR_USUARIO, peticion.getHashcodeSC(), null,peticion.getUsuario()));
+    public void construirPeticionNotificarClientes(PeticionUsuario peticion){
+        agregarProblema(new PeticionUsuario(Peticiones.NOTIFICAR_TODOS, Peticiones.ACTUALIZAR_USUARIO, peticion.getHashcodeSC(), null,peticion.getUsuario()));
     }
     
     public boolean existeUsuario(String usuario) {

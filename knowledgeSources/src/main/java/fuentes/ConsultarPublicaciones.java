@@ -71,11 +71,6 @@ public class ConsultarPublicaciones extends AbstractFuente {
         }
     }
 
-    public void agregarProblema(AbstractPeticion peticion) {
-        Blackboard bb = Blackboard.getInstance();
-        bb.addProblem(peticion);
-    }
-
     public void construirPeticionNotificarCliente(PeticionPublicaciones peticion) {
         if(peticion.getPeticion().equals(CONSULTAR_PUBLICACIONES)){
             agregarProblema(new PeticionPublicaciones(NOTIFICAR_CLIENTE, CONSULTAR_PUBLICACIONES, peticion.getHashcodeSC(), null, peticion.getPublicaciones()));

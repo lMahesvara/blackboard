@@ -21,11 +21,6 @@ public class LoguearTransaccion extends AbstractFuente{
         PeticionLog pL = (PeticionLog)peticion;
         definirTransaccion(pL);
     }
-    
-    @Override
-    public void agregarProblema(AbstractPeticion peticion){
-        
-    }
 
     public void definirTransaccion(PeticionLog pL){
         if(pL.getPeticion().equals(LOGGEAR_INFO)){

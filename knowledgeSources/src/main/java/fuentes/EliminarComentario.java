@@ -52,13 +52,6 @@ public class EliminarComentario extends AbstractFuente {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public void agregarProblema(AbstractPeticion peticion) {
-        Blackboard bb = Blackboard.getInstance();
-        bb.addProblem(peticion);
-    }
-
     public void construirPeticionLog(PeticionComentario peticion) {
         String mensaje = "[COMENTARIO ELIMINADO] [ID Usuario: " + peticion.getComentario().getUsuario() + "]";
         AbstractPeticion nuevaPeticion = new PeticionLog(LOGGEAR_INFO, peticion.getHashcodeSC(), mensaje);

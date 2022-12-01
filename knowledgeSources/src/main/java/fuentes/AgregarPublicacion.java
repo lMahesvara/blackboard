@@ -77,11 +77,6 @@ public class AgregarPublicacion extends AbstractFuente {
         }
     }
 
-    public void agregarProblema(AbstractPeticion peticion) {
-        Blackboard bb = Blackboard.getInstance();
-        bb.addProblem(peticion);
-    }
-
     public void construirPeticionLog(PeticionPublicacion peticion) {
         String mensaje = "[PUBLICACIÓN AGREGADA] [ID Usuario: " + peticion.getPublicacion().getUsuario() + "]";
         AbstractPeticion nuevaPeticion = new PeticionLog(LOGGEAR_INFO, peticion.getHashcodeSC(), mensaje);

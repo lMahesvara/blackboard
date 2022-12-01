@@ -35,11 +35,6 @@ public class AgregarComentario extends AbstractFuente{
         }
     }
 
-    public void agregarProblema(AbstractPeticion peticion) {
-        Blackboard bb = Blackboard.getInstance();
-        bb.addProblem(peticion);
-    }
-
     public void construirPeticionLog(PeticionComentario peticion) {
         String mensaje = "[COMENTARIO AGREGADO] [ID Usuario: " + peticion.getComentario().getUsuario() + "]";
         AbstractPeticion nuevaPeticion = new PeticionLog(LOGGEAR_INFO, peticion.getHashcodeSC(), mensaje);

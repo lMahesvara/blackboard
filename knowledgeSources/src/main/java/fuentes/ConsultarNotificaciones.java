@@ -52,11 +52,6 @@ public class ConsultarNotificaciones extends AbstractFuente{
         }
     }
 
-    public void agregarProblema(AbstractPeticion peticion) {
-        Blackboard bb = Blackboard.getInstance();
-        bb.addProblem(peticion);
-    }
-
     public void construirPeticionNotificarCliente(PeticionNotificaciones peticion) {
         agregarProblema(new PeticionNotificaciones(NOTIFICAR_CLIENTE, CONSULTAR_NOTIFICACIONES, peticion.getHashcodeSC(), null, peticion.getNotificaciones()));
     }

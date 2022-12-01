@@ -39,12 +39,6 @@ public class CerrarSesion extends AbstractFuente{
             Logger.getLogger(AgregarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    @Override
-    public void agregarProblema(AbstractPeticion peticion) {
-        Blackboard bb = Blackboard.getInstance();
-        bb.addProblem(peticion);
-    }
     
     public void construirPeticionNotificarCliente(Usuario usuario, Integer hashcodeSC) {
         agregarProblema(new PeticionUsuario(NOTIFICAR_CLIENTE, Peticiones.CERRAR_SESION, hashcodeSC, null, usuario));

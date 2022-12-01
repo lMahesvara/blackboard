@@ -45,12 +45,7 @@ public class EliminarPublicacion extends AbstractFuente {
             e.printStackTrace();
         }
     }
-
-    public void agregarProblema(AbstractPeticion peticion) {
-        Blackboard bb = Blackboard.getInstance();
-        bb.addProblem(peticion);
-    }
-
+     
     public void construirPeticionLog(PeticionPublicacion peticion) {
         String mensaje = "[PUBLICACIÓN ELIMINADA] [ID Usuario: " + peticion.getPublicacion().getUsuario() + "]";
         AbstractPeticion nuevaPeticion = new PeticionLog(LOGGEAR_INFO, peticion.getHashcodeSC(), mensaje);

@@ -52,12 +52,6 @@ public class IniciarSesionFb extends AbstractFuente {
 
     }
 
-    @Override
-    public void agregarProblema(AbstractPeticion peticion) {
-        Blackboard bb = Blackboard.getInstance();
-        bb.addProblem(peticion);
-    }
-
     public void construirPeticionLog(Usuario u) {
         String mensaje = "[INICIO DE SESION] [username: " + u.getUsuario() + "]";
         AbstractPeticion peticion = new PeticionLog(LOGGEAR_INFO, mensaje);
