@@ -1,10 +1,8 @@
 package fuentes;
 
-import blackboard.Blackboard;
 import entidades.Usuario;
 import helpers.Peticiones;
 import static helpers.Peticiones.LOGGEAR_INFO;
-import static helpers.Peticiones.NOTIFICAR_TODOS;
 import interfaces.AbstractFuente;
 import interfaces.IConexionBD;
 import java.util.List;

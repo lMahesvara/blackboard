@@ -1,6 +1,5 @@
 package fuentes;
 
-import blackboard.Blackboard;
 import entidades.Etiqueta;
 import entidades.Hashtag;
 import entidades.Publicacion;

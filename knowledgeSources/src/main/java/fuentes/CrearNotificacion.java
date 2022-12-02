@@ -4,10 +4,8 @@
  */
 package fuentes;
 
-import blackboard.Blackboard;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
-import entidades.Comentario;
 import entidades.Notificacion;
 import entidades.Usuario;
 import helpers.Peticiones;
@@ -28,7 +26,6 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import peticiones.AbstractPeticion;
-import peticiones.PeticionComentario;
 import peticiones.PeticionLog;
 import peticiones.PeticionNotificacion;
 
@@ -56,7 +53,9 @@ public class CrearNotificacion extends AbstractFuente{
             Usuario destinatario = existeUsuario(notificacion.getDestinatario().getUsuario());
             
             if(destinatario == null){
-                System.out.println("no existe");
+                pN.getNotificacion().setDestinatario(destinatario);
+                construirPeticionNotificarCliente(pN,pN.getPeticion());
+                System.out.println("No existe el usuario");
                 return;
             }
             
