@@ -24,15 +24,22 @@ import peticiones.PeticionUsuario;
  * @author Vastem
  */
 public class IniciarSesion extends AbstractFuente {
-
     private final IConexionBD conexionBD;
     private final EntityManager em;
 
+    /**
+     * Constructor por defecto  
+     * @param conexionBD Conexion a la base de datos
+     */
     public IniciarSesion(IConexionBD conexionBD) {
         this.conexionBD = conexionBD;
         this.em = this.conexionBD.crearConexion();
     }
-
+    
+    /**
+     * Se encarga de procesar la petición
+     * @param peticion Petición a procesar
+     */
     @Override
     public void procesar(AbstractPeticion peticion) {
         PeticionUsuario pU = (PeticionUsuario) peticion;
@@ -50,16 +57,25 @@ public class IniciarSesion extends AbstractFuente {
 
     }
 
+    /**
+     * Construye una petición para logear lo sucedido
+     */
     public void construirPeticionLog(Usuario u) {
         String mensaje = "[INICIO DE SESION] [username: " + u.getUsuario() + "]";
         AbstractPeticion peticion = new PeticionLog(LOGGEAR_INFO, mensaje);
         agregarProblema(peticion);
     }
 
+    /**
+     * Construye una petición para notificar al cliente
+     */ 
     public void construirPeticionNotificarCliente(Usuario usuario, Integer hashcodeSC) {
         agregarProblema(new PeticionUsuario(NOTIFICAR_CLIENTE, Peticiones.INICIAR_SESION, hashcodeSC, null, usuario));
     }
-
+    
+    /*
+    * Valida si el usuario existe
+    */
     public Usuario validarUsuario(Usuario usuario) {
         em.getTransaction().begin();
 

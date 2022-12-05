@@ -7,6 +7,9 @@ import peticiones.AbstractPeticion;
 public class HiloSocket extends Thread{
     private AbstractPeticion peticion;
 
+    /**
+     * Constructor
+     */
     public HiloSocket(AbstractPeticion peticion) {
         this.peticion = peticion;
     }
@@ -14,6 +17,9 @@ public class HiloSocket extends Thread{
     public HiloSocket() {
     }
 
+    /**
+     * Corre el hilo del blackboard
+     */
     @Override
     public void run() {
         Blackboard bb = Blackboard.getInstance();

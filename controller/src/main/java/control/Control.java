@@ -15,15 +15,26 @@ public class Control {
         this.fachadaBb = new FachadaBlackboardControl();
     }
 
+    /**
+     * 
+     * @param args 
+     */
     public static void main(String[] args){
         Server.getInstance().start();
         Control c = new Control();
         c.preguntarPeticion();
     }
 
+    /**
+     * Ejecuta la peticion del blackboard
+     */
     public void update(AbstractPeticion peticion){
         manejadorKS.ejecutar(peticion);
     }
+    
+    /**
+     * Pregunta si existe alguna peticion
+     */
     public void preguntarPeticion(){
         while(true){
             try {

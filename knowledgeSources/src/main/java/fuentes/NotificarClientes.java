@@ -6,7 +6,10 @@ import interfaces.IFachadaBlackboard;
 import peticiones.AbstractPeticion;
 
 public class NotificarClientes extends AbstractFuente {
-
+    /**
+     * Se encarga de procesar la petición
+     * @param peticion Petición a procesar
+     */
     @Override
     public void procesar(AbstractPeticion peticion) {
         IFachadaBlackboard fachadaBlack = new FachadaBlackboard();

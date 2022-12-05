@@ -13,6 +13,10 @@ import jakarta.persistence.Persistence;
  */
 public class ConexionBD implements IConexionBD{
 
+    /**
+     * Crea la conexion con la base de datos
+     * @return Conexion con la base de datos     
+     */
     @Override
     public EntityManager crearConexion() throws IllegalStateException {
         //Obtiene acceso alemFactory a partir de la persistence unit utilizada

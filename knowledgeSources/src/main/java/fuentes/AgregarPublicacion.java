@@ -21,11 +21,19 @@ public class AgregarPublicacion extends AbstractFuente {
     private final IConexionBD conexionBD;
     private final EntityManager em;
 
+    /**
+     * Constructor por defecto  
+     * @param conexionBD Conexion a la base de datos
+     */
     public AgregarPublicacion(IConexionBD conexionBD) {
         this.conexionBD = conexionBD;
         this.em = this.conexionBD.crearConexion();
     }
 
+    /**
+     * Se encarga de procesar la petición
+     * @param peticion Petición a procesar
+     */
     public void procesar(AbstractPeticion peticion) {
         Session session = em.unwrap(Session.class);
         PeticionPublicacion pP = (PeticionPublicacion) peticion;
@@ -76,12 +84,20 @@ public class AgregarPublicacion extends AbstractFuente {
         }
     }
 
+    /**
+     * Construye una petición para logear lo sucedido
+     * @param peticion Petición a agregar al blackboard
+     */
     public void construirPeticionLog(PeticionPublicacion peticion) {
         String mensaje = "[PUBLICACIÓN AGREGADA] [ID Usuario: " + peticion.getPublicacion().getUsuario() + "]";
         AbstractPeticion nuevaPeticion = new PeticionLog(LOGGEAR_INFO, peticion.getHashcodeSC(), mensaje);
         agregarProblema(nuevaPeticion);
     }
 
+    /**
+     * Construye una petición para notificar a los clientes conectados
+     * @param peticion Petición a agregar al blackboard
+     */ 
     public void construirPeticionNotificarClientes(PeticionPublicacion peticion) {
         agregarProblema(new PeticionPublicacion(Peticiones.NOTIFICAR_TODOS, Peticiones.REGISTRAR_PUBLICACION, peticion.getHashcodeSC(), null, peticion.getPublicacion()));
     }

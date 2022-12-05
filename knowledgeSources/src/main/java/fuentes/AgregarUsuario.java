@@ -15,15 +15,22 @@ import peticiones.PeticionLog;
 import peticiones.PeticionUsuario;
 
 public class AgregarUsuario extends AbstractFuente {
-
     private final IConexionBD conexionBD;
     private final EntityManager em;
 
+    /**
+     * Constructor por defecto  
+     * @param conexionBD Conexion a la base de datos
+     */
     public AgregarUsuario(IConexionBD conexionBD) {
         this.conexionBD = conexionBD;
         this.em = this.conexionBD.crearConexion();
     }
 
+    /**
+     * Se encarga de procesar la petición
+     * @param peticion Petición a procesar
+     */
     @Override
     public void procesar(AbstractPeticion peticion) {
         PeticionUsuario pU = (PeticionUsuario)peticion;
@@ -46,12 +53,20 @@ public class AgregarUsuario extends AbstractFuente {
 
     }
 
+    /**
+     * Construye una petición para logear lo sucedido
+     * @param peticion Petición a agregar al blackboard
+     */
     public void construirPeticionLog(PeticionUsuario peticion){
         String mensaje = "[USUARIO AGREGADO] [username: "+ peticion.getUsuario().getUsuario() +"]";
         AbstractPeticion nuevaPeticion = new PeticionLog(LOGGEAR_INFO, peticion.getHashcodeSC(), mensaje);
         this.agregarProblema(nuevaPeticion);
     }
     
+    /**
+     * Construye una petición para notificar a los clientes conectados
+     * @param peticion Petición a agregar al blackboard
+     */ 
     public void construirPeticionNotificarClientes(PeticionUsuario peticion){
         agregarProblema(new PeticionUsuario(Peticiones.NOTIFICAR_CLIENTE, peticion.getHashcodeSC(), peticion.getUsuario()));
     }

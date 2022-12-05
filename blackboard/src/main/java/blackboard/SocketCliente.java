@@ -16,10 +16,16 @@ public class SocketCliente extends Thread {
     private BufferedReader entrada;
     private PrintStream salida;
     
+    /**
+     * Constructor
+     */
     public SocketCliente(Socket socket) {
         this.socket = socket;
     }
 
+    /**
+     * Hilo que recibe las peticiones del cliente
+     */
     @Override
     public void run() {
         //Obtener ip address
@@ -40,6 +46,9 @@ public class SocketCliente extends Thread {
         }
     }
 
+    /**
+     * Envia una respuesta al cliente
+     */
     public void sendResponse(AbstractPeticion peticion) {
         try {
             salida = new PrintStream(socket.getOutputStream());
@@ -52,6 +61,9 @@ public class SocketCliente extends Thread {
         }
     }
     
+    /**
+     * Cierra el socket
+     */
     public void closeAll() {
         try {
             salida.close();
@@ -62,6 +74,9 @@ public class SocketCliente extends Thread {
         }
     }
 
+    /**
+     * Ejecuta un nuevo hilo
+     */
     public void ejecutarNuevoHilo(String json) {
         HiloSocket hilo = HilosFactory.crearHiloSocket(json, hashCode());
         hilo.start();
