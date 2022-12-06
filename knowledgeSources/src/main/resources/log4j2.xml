@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS}|%-5level|%t|%msg%n"/>
+        </Console>
+        <NoSql name="MongoDbAppender">
+            <MongoDb capped="true" collectionSize="104857600"
+                     databaseName="transacciones"
+                     collectionName="logs"
+            />
+        </NoSql>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="MongoDbAppender"/>
+        </Root>
+        <Logger name="org.hibernate" level="OFF" additivity="false">
+            <AppenderRef ref="Console" />
+        </Logger>
+        <Logger name="SQL dialect" level="OFF" additivity="false">
+            <AppenderRef ref="Console" />
+        </Logger>
+    </Loggers>
+</Configuration>
