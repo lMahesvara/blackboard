@@ -19,9 +19,6 @@
 Página del login
 ![Página del login](login.png)
 
-Página del home
-![Página del home](home.png)
-
 ## Proyecto
 
 Este proyecto fue realizado como proyecto final de la materia Arquitectura de software, implementando la arquitectura de Blackboard y utilizando sockets para la transferencia de datos.
