@@ -28,7 +28,6 @@ Este proyecto fue realizado como proyecto final de la materia Arquitectura de so
 - Repositorio: [Solución](https://github.com/lMahesvara/blackboard)
 - Repositorio: [Front](https://github.com/lMahesvara/faceboot)
 - Repositorio: [Entidades](https://github.com/roberto-rw/entidades)
-- 
 
 ## Proceso
 
